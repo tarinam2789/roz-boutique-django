@@ -118,12 +118,12 @@ class Command(BaseCommand):
             "between two sizes, we recommend sizing up for comfort, especially for heavily embellished pieces."
         )
         guide_rows_data = {
-            "XS": (32, 26, 34, 42, 22, 13.5),
-            "S": (34, 28, 36, 43, 22.5, 14),
-            "M": (36, 30, 38, 44, 23, 14.5),
-            "L": (38, 32, 40, 45, 23.5, 15),
-            "XL": (40, 34, 42, 46, 24, 15.5),
-            "XXL": (42, 36, 44, 47, 24.5, 16),
+            "XS": (32, 26, 42, 22, 38),
+            "S": (34, 28, 43, 22.5, 38),
+            "M": (36, 30, 44, 23, 39),
+            "L": (38, 32, 45, 23.5, 39),
+            "XL": (40, 34, 46, 24, 40),
+            "XXL": (42, 36, 47, 24.5, 40),
         }
 
         for (name, cat_slug, price, compare, desc, fabric, swatch, season, best, feat, new) in products:
@@ -139,10 +139,10 @@ class Command(BaseCommand):
                 ProductSize.objects.create(product=product, size_code=size_code, quantity=qty)
 
             guide = SizeGuide.objects.create(product=product, instructions=guide_text, unit="in")
-            for size_code, (chest, waist, hips, length, sleeve, shoulder) in guide_rows_data.items():
+            for size_code, (chest, waist, length, sleeve, bottom_length) in guide_rows_data.items():
                 SizeGuideRow.objects.create(
                     size_guide=guide, size_code=size_code, chest=chest, waist=waist,
-                    hips=hips, length=length, sleeve_length=sleeve, bottom_length=None,
+                    length=length, sleeve_length=sleeve, bottom_length=bottom_length,
                 )
 
         # make the bridal lehenga sell out in XS/XXL, for realism
